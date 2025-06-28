@@ -35,41 +35,33 @@ export default function Welcome() {
   const year = new Date().getFullYear();
 
   useEffect(() => {
-    async function fetchMains() {
+    async function fetchData() {
       try {
-        const res = await fetch('/api/mains');
-        const data = await res.json();
-        // Convert array to object keyed by section
-        const mainsObj = data.reduce((acc, item) => {
+        const [mainsRes, footersRes] = await Promise.all([
+          fetch('/api/mains'),
+          fetch('/api/footers'),
+        ]);
+        const [mainsData, footersData] = await Promise.all([
+          mainsRes.json(),
+          footersRes.json(),
+        ]);
+        const mainsObj = mainsData.reduce((acc, item) => {
+          acc[item.section] = item.content;
+          return acc;
+        }, {});
+        const footersObj = footersData.reduce((acc, item) => {
           acc[item.section] = item.content;
           return acc;
         }, {});
         setMains(mainsObj);
-      } catch (error) {
-        console.error('Error fetching mains:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    async function fetchFooters() {
-      try {
-        const res = await fetch('/api/footers');
-        const data = await res.json();
-        const footersObj = data.reduce((acc, item) => {
-          acc[item.section] = item.content;
-          return acc;
-        }, {});
         setFooters(footersObj);
       } catch (error) {
-        console.error('Error fetching footers:', error);
+        console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
     }
-
-    fetchMains();
-    fetchFooters();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -84,11 +76,23 @@ export default function Welcome() {
       const time = new Intl.DateTimeFormat('en-IN', options).format(new Date());
       setIstTime(`IST ${time}`);
     };
-
     updateISTTime();
     const interval = setInterval(updateISTTime, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedTab = localStorage.getItem('activeTab');
+      if (savedTab) setActiveTab(savedTab);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('activeTab', activeTab);
+    }
+  }, [activeTab]);
 
   return (
     <div className="bg-gray-200 text-gray-900 selection:bg-yellow-300 sm:text-xl font-bold min-h-screen flex flex-col p-2 sm:p-8">
@@ -128,7 +132,7 @@ export default function Welcome() {
         </div>
 
         <div className="mt-4 flex flex-col sm:flex-row justify-between sm:items-end gap-2">
-          <p className="sm:w-3/4">
+          <div className="sm:w-3/4">
             {loading ? (
               <div className="space-y-4 animate-pulse">
                 <div className="h-4 bg-gray-300 rounded w-5/6" />
@@ -138,7 +142,7 @@ export default function Welcome() {
             ) : (
               mains[activeTab]
             )}
-          </p>
+          </div>
           <p className="sm:w-1/4 text-sm sm:text-right" aria-live="polite">
             {istTime}
           </p>
@@ -192,8 +196,8 @@ export default function Welcome() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full p-4 sm:p-8 bg-stone-50 border-t border-yellow-100  shadow rounded-xl">
-        <p className="mb-8 sm:mb-16">
+      <footer className="w-full p-4 sm:p-8 bg-stone-50 border-t border-yellow-100 shadow rounded-xl">
+        <div className="mb-8 sm:mb-16">
           {loading ? (
             <div className="space-y-4 animate-pulse">
               <div className="h-4 bg-gray-300 rounded w-1/2" />
@@ -203,7 +207,7 @@ export default function Welcome() {
           ) : (
             footers[activeTab]
           )}
-        </p>
+        </div>
         <hr className="my-4 h-0.5 bg-yellow-300 border-none" />
         <div className="sm:flex flex-row items-center justify-between gap-4 text-xs sm:text-sm font-thin">
           <p className="text-gray-400 mb-2 sm:mb-0 ">
