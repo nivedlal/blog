@@ -36,7 +36,7 @@ export default function Details() {
           </p>
         </div>
         <div className="flex sm:justify-center mt-8">
-          <div className="sm:flex gap-6 text-sm text-gray-600 w-full">
+          <div className="sm:flex gap-6 text-sm text-gray-600 w-full sm:justify-center">
             {loading ? (
               <div className="flex gap-6 animate-pulse">
                 <div className="h-4 bg-gray-300 rounded w-24" />
