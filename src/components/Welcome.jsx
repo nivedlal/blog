@@ -7,14 +7,24 @@ const tabs = [
   { key: 'human', label: 'Human', icon: '👤' },
 ];
 
-const tiles = [
-  { id: 1, title: 'Tile One', date: '22/02/2025' },
-  { id: 2, title: 'Tile Two', date: '22/02/2025' },
-  { id: 3, title: 'Tile Three', date: '22/02/2025' },
-  { id: 4, title: 'Tile Four', date: '22/02/2025' },
-  { id: 5, title: 'Tile Five', date: '22/02/2025' },
-  { id: 6, title: 'Tile Six', date: '22/02/2025' },
-];
+const tiles = {
+  process: [
+    { id: 1, title: 'Process Tile 1', date: '22/02/2025' },
+    { id: 2, title: 'Process Tile 2', date: '22/02/2025' },
+  ],
+  project: [
+    { id: 3, title: 'Project Tile 1', date: '23/02/2025' },
+    { id: 4, title: 'Project Tile 2', date: '23/02/2025' },
+  ],
+  files: [
+    { id: 5, title: 'Files Tile 1', date: '24/02/2025' },
+    { id: 6, title: 'Files Tile 2', date: '24/02/2025' },
+  ],
+  human: [
+    { id: 7, title: 'Human Tile 1', date: '25/02/2025' },
+    { id: 8, title: 'Human Tile 2', date: '25/02/2025' },
+  ],
+};
 
 export default function Welcome() {
   const [activeTab, setActiveTab] = useState('process');
@@ -159,10 +169,10 @@ export default function Welcome() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {tiles.map((tile) => (
+            {tiles[activeTab]?.map((tile) => (
               <div
                 key={tile.id}
-                className="bg-stone-50 p-6  rounded-xl shadow hover:shadow-lg transition duration-300"
+                className="bg-stone-50 p-6 rounded-xl shadow hover:shadow-lg transition duration-300"
               >
                 <h3 className="text-xl font-bold mb-2">{tile.title}</h3>
                 <p className="text-gray-400 text-sm my-4 font-thin">
@@ -171,8 +181,8 @@ export default function Welcome() {
                 <p className="text-gray-400 text-xs flex justify-between font-thin">
                   <span className="text-gray-900">ID</span> {tile.id}
                 </p>
-                <div className=" mt-4 flex justify-between">
-                  <hr className="mt-4 w-12 h-0.75 bg-yellow-300 border-none" />{' '}
+                <div className="mt-4 flex justify-between">
+                  <hr className="mt-4 w-12 h-0.75 bg-yellow-300 border-none" />
                   <span className="font-thin text-2xl">→</span>
                 </div>
               </div>
