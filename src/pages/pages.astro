@@ -1,0 +1,36 @@
+---
+import '../styles/global.css';
+
+const base = import.meta.env.DEV
+  ? 'http://localhost:4321'
+  : Astro.site?.toString() || '';
+
+const res = await fetch(`${base}/api/pages`);
+if (!res.ok) {
+  throw new Error(`Failed to fetch pages: ${res.status}`);
+}
+const pages = await res.json();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pages</title>
+  </head>
+  <body class="p-8 bg-gray-50">
+    <h1 class="text-3xl font-bold mb-6">Page Entries</h1>
+    <ul class="space-y-6">
+      {
+        pages.map((p) => (
+          <li class="p-4 bg-white rounded shadow" key={p.id}>
+            <h2 class="text-xl font-semibold">{p.title}</h2>
+            <p class="text-gray-600 mt-2">{p.content}</p>
+            <small class="text-sm text-gray-500">
+              Created at: {new Date(p.created_at).toLocaleString()}
+            </small>
+          </li>
+        ))
+      }
+    </ul>
+  </body>
+</html>
