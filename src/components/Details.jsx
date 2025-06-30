@@ -1,8 +1,83 @@
 import React, { useState, useEffect } from 'react';
+const staticData = {
+  1: {
+    title: 'Mars Rover Project',
+    date: 'Jun 20, 2025',
+    image: '/background.svg',
+    tags: ['Blender, 3D printer, Figma'],
+    category: ['3D Printed'],
+    description:
+      'This was a Mars rover model created in Blender, printed with PLA, and rendered in Figma for presentation.',
+  },
+  2: {
+    title: 'Futuristic Lamp',
+    date: 'May 10, 2025',
+    image: '/background.svg',
+    tags: ['Fusion 360, PLA, LEDs'],
+    category: ['3D Printed'],
+    description:
+      'This smart lamp reacts to ambient light and motion, inspired by Bauhaus minimalism.',
+  },
+  3: {
+    title: 'Eco-Friendly Backpack',
+    date: 'Apr 15, 2025',
+    image: '/background.svg',
+    tags: ['Canvas, Recycled Plastic'],
+    category: ['3D Printed'],
+    description:
+      'A backpack designed with eco-conscious materials to minimize environmental impact without compromising durability.',
+  },
+  4: {
+    title: 'Smart Watch UI',
+    date: 'Mar 22, 2025',
+    image: '/background.svg',
+    tags: ['Figma, Prototyping'],
+    category: ['3D Printed'],
+    description:
+      'Created a clean and intuitive user interface prototype for a futuristic smartwatch with health tracking features.',
+  },
+  5: {
+    title: 'Urban Garden Layout',
+    date: 'Feb 28, 2025',
+    image: '/background.svg',
+    tags: ['AutoCAD, Sustainability'],
+    category: ['3D Printed'],
+    description:
+      'Designed an urban garden plan that maximizes green space and promotes sustainable urban agriculture.',
+  },
+  6: {
+    title: 'Electric Bike Frame',
+    date: 'Jan 18, 2025',
+    image: '/background.svg',
+    tags: ['SolidWorks, Aluminum'],
+    category: ['3D Printed'],
+    description:
+      'Developed a lightweight and durable frame for an electric bike, focusing on ergonomics and aesthetics.',
+  },
+  7: {
+    title: 'Augmented Reality App',
+    date: 'Dec 05, 2024',
+    image: '/background.svg',
+    tags: ['Unity, C#'],
+    category: ['3D Printed'],
+    description:
+      'Built an AR application to visualize furniture placement in real-time within users’ homes.',
+  },
+  8: {
+    title: 'Minimalist Wallet',
+    date: 'Nov 10, 2024',
+    image: '/background.svg',
+    tags: ['Leather, Laser Cutting'],
+    category: ['3D Printed'],
+    description:
+      'Designed a slim, minimalist wallet using premium leather and precision laser cutting for a sleek finish.',
+  },
+};
 
-export default function Details() {
+export default function Details({ id }) {
   const [istTime, setIstTime] = useState('');
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({});
 
   useEffect(() => {
     const updateISTTime = () => {
@@ -17,9 +92,27 @@ export default function Details() {
       setIstTime(`IST ${time}`);
     };
     updateISTTime();
+    const item = staticData[id];
+    setData(item || {});
     const interval = setInterval(updateISTTime, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [id]);
+
+  if (!data.title && !loading) {
+    return (
+      <div className="bg-gray-200 text-gray-900 selection:bg-yellow-300 sm:text-xl font-bold min-h-screen flex justify-center items-center p-2 sm:p-8">
+        <div className="text-center space-y-4">
+          <p>Item not found.</p>
+          <a
+            href="/"
+            className="px-3 py-1 rounded border border-yellow-500 hover:border-2 transition"
+          >
+            Go Home
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-200 text-gray-900 selection:bg-yellow-300 sm:text-xl font-bold min-h-screen flex flex-col p-2 sm:p-8">
@@ -45,13 +138,13 @@ export default function Details() {
               </div>
             ) : (
               <>
-                <p>3D Printed</p>
+                <p>{data.category}</p>
                 <p className="my-4 sm:my-0">
                   <span className="px-3 py-1 rounded border border-yellow-500">
-                    Jun 20, 2025
+                    {data.date}
                   </span>
                 </p>
-                <p>Blender, 3D printer, Figma</p>
+                <p>{data.tags?.[0]}</p>
               </>
             )}
           </div>
@@ -65,14 +158,17 @@ export default function Details() {
         ) : (
           <>
             <h1 className="text-5xl sm:text-8xl font-black mt-4 sm:mt-8 uppercase sm:text-center">
-              Here's title
+              {data.title}
             </h1>
+            <div className="bg-slate-100 p-4 rounded-md my-4 flex justify-center">
+              <img
+                src={data.image}
+                alt={data.title}
+                className="object-contain max-w-full h-auto rounded"
+              />
+            </div>
             <p className="mt-4 mb-2 font-thin text-sm">Description</p>
-            <p className="font-thin sm:text-2xl">
-              Sunny Bonnell is Co-Founder and CEO of the branding agency
-              Motto®, a bestselling author, brand expert, and keynote speaker
-              trusted by the world’s most iconic brands.
-            </p>
+            <p className="font-thin sm:text-2xl">{data.description}</p>
           </>
         )}
       </div>

@@ -1,0 +1,9 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Details from '../../components/Details.jsx';
+const { id } = Astro.params;
+---
+
+<Layout>
+  <Details client:load id={id} />
+</Layout>

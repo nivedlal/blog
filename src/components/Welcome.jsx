@@ -9,20 +9,60 @@ const tabs = [
 
 const tiles = {
   process: [
-    { id: 1, title: 'Process Tile 1', date: '22/02/2025' },
-    { id: 2, title: 'Process Tile 2', date: '22/02/2025' },
+    {
+      id: 1,
+      title: 'Process Tile 1',
+      date: '22/02/2025',
+      image: 'background.svg',
+    },
+    {
+      id: 2,
+      title: 'Process Tile 2',
+      date: '22/02/2025',
+      image: 'background.svg',
+    },
   ],
   project: [
-    { id: 3, title: 'Project Tile 1', date: '23/02/2025' },
-    { id: 4, title: 'Project Tile 2', date: '23/02/2025' },
+    {
+      id: 3,
+      title: 'Project Tile 1',
+      date: '23/02/2025',
+      image: 'background.svg',
+    },
+    {
+      id: 4,
+      title: 'Project Tile 2',
+      date: '23/02/2025',
+      image: 'background.svg',
+    },
   ],
   files: [
-    { id: 5, title: 'Files Tile 1', date: '24/02/2025' },
-    { id: 6, title: 'Files Tile 2', date: '24/02/2025' },
+    {
+      id: 5,
+      title: 'Files Tile 1',
+      date: '24/02/2025',
+      image: 'background.svg',
+    },
+    {
+      id: 6,
+      title: 'Files Tile 2',
+      date: '24/02/2025',
+      image: 'background.svg',
+    },
   ],
   human: [
-    { id: 7, title: 'Human Tile 1', date: '25/02/2025' },
-    { id: 8, title: 'Human Tile 2', date: '25/02/2025' },
+    {
+      id: 7,
+      title: 'Human Tile 1',
+      date: '25/02/2025',
+      image: 'background.svg',
+    },
+    {
+      id: 8,
+      title: 'Human Tile 2',
+      date: '25/02/2025',
+      image: 'background.svg',
+    },
   ],
 };
 
@@ -174,10 +214,18 @@ export default function Welcome() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {tiles[activeTab]?.map((tile) => (
-              <div
+              <a
+                href={`/details/${tile.id}`}
                 key={tile.id}
-                className="bg-stone-50 p-6 rounded-xl shadow hover:shadow-lg transition duration-300"
+                className="bg-stone-50 p-6 rounded-xl shadow hover:shadow-lg hover:bg-white transition duration-300"
               >
+                {tile.image && (
+                  <img
+                    src={tile.image}
+                    alt={tile.title}
+                    className="w-full h-60 sm:h-80 object-cover rounded-md mb-4"
+                  />
+                )}
                 <h3 className="text-xl font-bold mb-2">{tile.title}</h3>
                 <p className="text-gray-400 text-sm my-4 font-thin">
                   {tile.date}
@@ -189,7 +237,7 @@ export default function Welcome() {
                   <hr className="mt-4 w-12 h-0.75 bg-yellow-300 border-none" />
                   <span className="font-thin text-2xl">→</span>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         )}
