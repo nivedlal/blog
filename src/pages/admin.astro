@@ -1,0 +1,31 @@
+---
+// admin.astro
+import jwt from 'jsonwebtoken';
+import Layout from '../layouts/Layout.astro';
+import Admin from '../components/Admin.jsx';
+
+const SECRET_KEY = import.meta.env.KEY_LOGIN;
+
+// Get the JWT from the cookie
+const cookieHeader = Astro.request.headers.get('cookie') || '';
+const tokenMatch = cookieHeader.match(/token=([^;]+)/);
+const token = tokenMatch?.[1];
+
+let user = null;
+try {
+  if (token) {
+    user = jwt.verify(token, SECRET_KEY);
+  }
+} catch (err) {
+  console.error('JWT error:', err);
+}
+
+// Redirect to /login if not authenticated
+if (!user) {
+  return Astro.redirect('/login');
+}
+---
+
+<Layout>
+  <Admin client:load />
+</Layout>

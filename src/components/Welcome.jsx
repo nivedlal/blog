@@ -7,83 +7,27 @@ const tabs = [
   { key: 'human', label: 'Human', icon: '👤' },
 ];
 
-const tiles = {
-  process: [
-    {
-      id: 1,
-      title: 'Process Tile 1',
-      date: '22/02/2025',
-      image: 'background.svg',
-    },
-    {
-      id: 2,
-      title: 'Process Tile 2',
-      date: '22/02/2025',
-      image: 'background.svg',
-    },
-  ],
-  project: [
-    {
-      id: 3,
-      title: 'Project Tile 1',
-      date: '23/02/2025',
-      image: 'background.svg',
-    },
-    {
-      id: 4,
-      title: 'Project Tile 2',
-      date: '23/02/2025',
-      image: 'background.svg',
-    },
-  ],
-  files: [
-    {
-      id: 5,
-      title: 'Files Tile 1',
-      date: '24/02/2025',
-      image: 'background.svg',
-    },
-    {
-      id: 6,
-      title: 'Files Tile 2',
-      date: '24/02/2025',
-      image: 'background.svg',
-    },
-  ],
-  human: [
-    {
-      id: 7,
-      title: 'Human Tile 1',
-      date: '25/02/2025',
-      image: 'background.svg',
-    },
-    {
-      id: 8,
-      title: 'Human Tile 2',
-      date: '25/02/2025',
-      image: 'background.svg',
-    },
-  ],
-};
-
 export default function Welcome() {
   const [activeTab, setActiveTab] = useState('process');
   const [istTime, setIstTime] = useState('');
   const [mains, setMains] = useState({});
   const [footers, setFooters] = useState({});
   const [loading, setLoading] = useState(true);
+  const [tiles, setTiles] = useState({});
   const year = new Date().getFullYear();
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [mainsRes, footersRes] = await Promise.all([
+        const [mainsRes, footersRes, detailsRes] = await Promise.all([
           fetch('/api/mains'),
           fetch('/api/footers'),
+          fetch('/api/admin/details'),
         ]);
-        const [mainsData, footersData] = await Promise.all([
+        const [mainsData, footersData, detailsData] = await Promise.all([
           mainsRes.json(),
           footersRes.json(),
+          detailsRes.json(),
         ]);
         const mainsObj = mainsData.reduce((acc, item) => {
           acc[item.section] = item.content;
@@ -93,8 +37,15 @@ export default function Welcome() {
           acc[item.section] = item.content;
           return acc;
         }, {});
+        const groupedDetails = detailsData.reduce((acc, item) => {
+          const groupKey = item.group?.toLowerCase() || 'process'; // normalize group keys to match tab keys
+          if (!acc[groupKey]) acc[groupKey] = [];
+          acc[groupKey].push(item);
+          return acc;
+        }, {});
         setMains(mainsObj);
         setFooters(footersObj);
+        setTiles(groupedDetails);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -213,25 +164,25 @@ export default function Welcome() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {tiles[activeTab]?.map((tile) => (
+            {tiles[activeTab]?.map((item) => (
               <a
-                href={`/details/${tile.id}`}
-                key={tile.id}
+                href={`/details/${item.id}`}
+                key={item.id}
                 className="bg-stone-50 p-6 rounded-xl shadow hover:shadow-lg hover:bg-white transition duration-300"
               >
-                {tile.image && (
+                {item.image && (
                   <img
-                    src={tile.image}
-                    alt={tile.title}
+                    src={item.image}
+                    alt={item.title}
                     className="w-full h-60 sm:h-80 object-cover rounded-md mb-4"
                   />
                 )}
-                <h3 className="text-xl font-bold mb-2">{tile.title}</h3>
+                <h3 className="text-xl font-bold mb-2">{item.title}</h3>
                 <p className="text-gray-400 text-sm my-4 font-thin">
-                  {tile.date}
+                  {item.date}
                 </p>
                 <p className="text-gray-400 text-xs flex justify-between font-thin">
-                  <span className="text-gray-900">ID</span> {tile.id}
+                  <span className="text-gray-900">ID</span> {item.id}
                 </p>
                 <div className="mt-4 flex justify-between">
                   <hr className="mt-4 w-12 h-0.75 bg-yellow-300 border-none" />
@@ -259,7 +210,7 @@ export default function Welcome() {
         <hr className="my-4 h-0.5 bg-yellow-300 border-none" />
         <div className="sm:flex flex-row items-center justify-between gap-4 text-xs sm:text-sm font-thin">
           <p className="text-gray-400 mb-2 sm:mb-0 ">
-            © {year} All rights reserved | <span>admin</span>
+            © {year} All rights reserved | <a href="admin">admin</a>
           </p>
           <div
             className="flex gap-2 md:gap-4 lg:gap-8 cursor-pointer"

@@ -1,78 +1,4 @@
 import React, { useState, useEffect } from 'react';
-const staticData = {
-  1: {
-    title: 'Mars Rover Project',
-    date: 'Jun 20, 2025',
-    image: '/background.svg',
-    tags: ['Blender, 3D printer, Figma'],
-    category: ['3D Printed'],
-    description:
-      'This was a Mars rover model created in Blender, printed with PLA, and rendered in Figma for presentation.',
-  },
-  2: {
-    title: 'Futuristic Lamp',
-    date: 'May 10, 2025',
-    image: '/background.svg',
-    tags: ['Fusion 360, PLA, LEDs'],
-    category: ['3D Printed'],
-    description:
-      'This smart lamp reacts to ambient light and motion, inspired by Bauhaus minimalism.',
-  },
-  3: {
-    title: 'Eco-Friendly Backpack',
-    date: 'Apr 15, 2025',
-    image: '/background.svg',
-    tags: ['Canvas, Recycled Plastic'],
-    category: ['3D Printed'],
-    description:
-      'A backpack designed with eco-conscious materials to minimize environmental impact without compromising durability.',
-  },
-  4: {
-    title: 'Smart Watch UI',
-    date: 'Mar 22, 2025',
-    image: '/background.svg',
-    tags: ['Figma, Prototyping'],
-    category: ['3D Printed'],
-    description:
-      'Created a clean and intuitive user interface prototype for a futuristic smartwatch with health tracking features.',
-  },
-  5: {
-    title: 'Urban Garden Layout',
-    date: 'Feb 28, 2025',
-    image: '/background.svg',
-    tags: ['AutoCAD, Sustainability'],
-    category: ['3D Printed'],
-    description:
-      'Designed an urban garden plan that maximizes green space and promotes sustainable urban agriculture.',
-  },
-  6: {
-    title: 'Electric Bike Frame',
-    date: 'Jan 18, 2025',
-    image: '/background.svg',
-    tags: ['SolidWorks, Aluminum'],
-    category: ['3D Printed'],
-    description:
-      'Developed a lightweight and durable frame for an electric bike, focusing on ergonomics and aesthetics.',
-  },
-  7: {
-    title: 'Augmented Reality App',
-    date: 'Dec 05, 2024',
-    image: '/background.svg',
-    tags: ['Unity, C#'],
-    category: ['3D Printed'],
-    description:
-      'Built an AR application to visualize furniture placement in real-time within users’ homes.',
-  },
-  8: {
-    title: 'Minimalist Wallet',
-    date: 'Nov 10, 2024',
-    image: '/background.svg',
-    tags: ['Leather, Laser Cutting'],
-    category: ['3D Printed'],
-    description:
-      'Designed a slim, minimalist wallet using premium leather and precision laser cutting for a sleek finish.',
-  },
-};
 
 export default function Details({ id }) {
   const [istTime, setIstTime] = useState('');
@@ -92,9 +18,25 @@ export default function Details({ id }) {
       setIstTime(`IST ${time}`);
     };
     updateISTTime();
-    const item = staticData[id];
-    setData(item || {});
     const interval = setInterval(updateISTTime, 1000);
+
+    // Fetch data from API
+    const fetchData = async () => {
+      try {
+        const res = await fetch('/api/admin/details');
+        const json = await res.json();
+        const item = json.find((entry) => entry.id === Number(id));
+        setData(item || null);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+
     return () => clearInterval(interval);
   }, [id]);
 
