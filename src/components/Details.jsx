@@ -102,7 +102,16 @@ export default function Details({ id }) {
             <h1 className="text-5xl sm:text-8xl font-black mt-4 sm:mt-8 uppercase sm:text-center">
               {data.title}
             </h1>
-            <div className="bg-slate-100 p-4 rounded-md my-4 flex justify-center">
+            <div className="relative bg-slate-100 p-4 rounded-md my-4 flex justify-center">
+              {data.group === 'Files' && data.isfile && data.files && (
+                <a
+                  href={data.files}
+                  download
+                  className="absolute top-2 right-2 bg-yellow-400 hover:bg-yellow-500 px-2 py-1 rounded shadow transition font-light"
+                >
+                  ⬇ Download File
+                </a>
+              )}
               <img
                 src={data.image}
                 alt={data.title}

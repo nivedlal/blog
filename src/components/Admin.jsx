@@ -13,6 +13,7 @@ export default function Admin() {
     description: '',
     image: '',
     group: '',
+    files: '',
   });
   const [showAddForm, setShowAddForm] = useState(false);
 
@@ -24,6 +25,7 @@ export default function Admin() {
     description: '',
     image: '',
     group: '',
+    files: '',
   });
 
   const handleNewChange = (field, value) => {
@@ -41,6 +43,7 @@ export default function Admin() {
       description: newProject.description,
       image: newProject.image,
       group: newProject.group,
+      files: newProject.files,
     };
 
     try {
@@ -66,6 +69,7 @@ export default function Admin() {
         description: '',
         image: '',
         group: '',
+        files: '',
       });
     } catch (err) {
       alert('Error adding project');
@@ -121,6 +125,7 @@ export default function Admin() {
       description: project.description,
       image: project.image,
       group: project.group || 'Process',
+      files: project.files || '',
     });
   };
 
@@ -144,6 +149,7 @@ export default function Admin() {
       description: editForm.description,
       image: editForm.image,
       group: editForm.group,
+      files: editForm.file,
     };
 
     try {
@@ -233,6 +239,75 @@ export default function Admin() {
         ...prev,
         image: data.imageUrl,
       }));
+    } catch (err) {
+      alert('Image upload failed');
+    }
+  };
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!res.ok) {
+        alert('File upload failed');
+        return;
+      }
+
+      const data = await res.json();
+      setNewProject((prev) => ({
+        ...prev,
+        files: data.imageUrl,
+      }));
+
+      alert('File uploaded and DB updated successfully!');
+    } catch (error) {
+      alert('Error uploading file');
+    }
+  };
+
+  const handleEditFileUpload = async (e, projectId) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error('Upload failed');
+
+      const data = await res.json();
+      // 1) Update state locally
+      setEditForm((prev) => ({
+        ...prev,
+        files: data.imageUrl, // URL returned from upload API
+      }));
+
+      // 2) Send PUT request to update the DB with new file URL
+      const updateRes = await fetch(`/api/admin/details/${projectId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...editForm,
+          files: data.imageUrl,
+        }),
+      });
+
+      if (!updateRes.ok) throw new Error('Failed to update DB with file URL');
+
+      alert('File uploaded and DB updated successfully!');
     } catch (err) {
       alert('Image upload failed');
     }
@@ -381,7 +456,22 @@ export default function Admin() {
                         >
                           <option value="Process">Process</option>
                           <option value="Project">Project</option>
+                          <option value="Files">Files</option>
                         </select>
+                        <div className="flex flex-col gap-2">
+                          {editForm.group === 'Files' && (
+                            <label className="cursor-pointer inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded shadow-sm w-fit mt-2">
+                              Upload File
+                              <input
+                                type="file"
+                                onChange={(e) =>
+                                  handleEditFileUpload(e, editingId)
+                                }
+                                className="hidden"
+                              />
+                            </label>
+                          )}
+                        </div>
                       </td>
                       <td className="border border-black px-4 py-2 space-x-4 text-neutral-400">
                         <button
@@ -586,7 +676,26 @@ export default function Admin() {
                 >
                   <option value="Process">Process</option>
                   <option value="Project">Project</option>
+                  <option value="Files">Files</option>
                 </select>
+                {newProject.group === 'Files' && (
+                  <div className="flex gap-2 items-center">
+                    <label
+                      htmlFor="group-select"
+                      className="font-semibold text-sm"
+                    >
+                      Upload:
+                    </label>
+                    <label className="cursor-pointer inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded shadow-sm w-fit">
+                      Upload File
+                      <input
+                        type="file"
+                        onChange={(e) => handleFileUpload(e, editingId)}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
+                )}
               </div>
               <textarea
                 placeholder="Description"
