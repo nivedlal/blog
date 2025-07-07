@@ -1,0 +1,12 @@
+---
+import Projects from '../components/Projects.jsx';
+import Layout from '../layouts/Layout.astro';
+
+const { searchParams } = new URL(Astro.request.url);
+const tag = searchParams.get('tag');
+const category = searchParams.get('category');
+---
+
+<Layout>
+  <Projects tag={tag} category={category} client:load />
+</Layout>

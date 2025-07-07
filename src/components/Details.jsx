@@ -53,22 +53,6 @@ export default function Details({ id }) {
     return () => clearInterval(interval);
   }, [id]);
 
-  if (!data?.title && !loading) {
-    return (
-      <div className="bg-gray-200 text-gray-900 selection:bg-yellow-300 sm:text-xl min-h-screen flex justify-center items-center p-2 sm:p-8">
-        <div className="text-center space-y-4">
-          <p>Item not found.</p>
-          <a
-            href="/"
-            className="px-3 py-1 rounded border border-yellow-500 hover:border-2 transition"
-          >
-            Go Home
-          </a>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-gray-200 text-gray-900 selection:bg-yellow-300 sm:text-xl min-h-screen flex flex-col p-2 sm:p-8">
       <div className="w-full p-4 sm:p-8 bg-stone-50 border-t border-yellow-100 shadow rounded-xl">
@@ -143,12 +127,23 @@ export default function Details({ id }) {
                   />
                 ) : (
                   <p>
-                    {Array.isArray(data.category)
-                      ? data.category.join(', ')
-                      : data.category}
+                    {(Array.isArray(data.category)
+                      ? data.category
+                      : [data.category]
+                    )
+                      .filter(Boolean)
+                      .map((c, i, arr) => (
+                        <span key={i}>
+                          <a
+                            href={`/projects?category=${encodeURIComponent(c)}`}
+                          >
+                            {c}
+                          </a>
+                          {i < arr.length - 1 && ', '}
+                        </span>
+                      ))}
                   </p>
                 )}
-
                 {/* Date */}
                 {isEditing ? (
                   <input
@@ -187,16 +182,22 @@ export default function Details({ id }) {
                   />
                 ) : (
                   <p>
-                    {Array.isArray(data.tags)
-                      ? data.tags.join(', ')
-                      : data.tags}
+                    {(Array.isArray(data.tags) ? data.tags : [data.tags])
+                      .filter(Boolean)
+                      .map((tag, i, arr) => (
+                        <span key={i}>
+                          <a href={`/projects?tag=${encodeURIComponent(tag)}`}>
+                            {tag}
+                          </a>
+                          {i < arr.length - 1 && ', '}{' '}
+                        </span>
+                      ))}{' '}
                   </p>
                 )}
               </>
             )}
           </div>
         </div>
-
         {loading ? (
           <div className="animate-pulse space-y-4 mt-4 sm:mt-8">
             <div className="h-10 sm:h-20 bg-gray-300 rounded w-2/3 sm:w-1/2 mx-auto" />
