@@ -149,7 +149,11 @@ export default function Welcome() {
                 role="tab"
                 tabIndex={activeTab === tab.key ? 0 : -1}
                 aria-selected={activeTab === tab.key}
-                onClick={() => setActiveTab(tab.key)}
+                onClick={() => {
+                  setActiveTab(tab.key);
+                  setEditingMain(false);
+                  setEditingFooter(false);
+                }}
                 className={`group focus:outline-none flex items-center transition-colors ${
                   activeTab === tab.key
                     ? 'text-yellow-500'
@@ -202,8 +206,7 @@ export default function Welcome() {
                   }}
                   className="px-4 py-1 rounded bg-red-400 hover:bg-red-500 ms-2"
                 >
-                  {' '}
-                  ❌ Cancel{' '}
+                  ❌ Cancel
                 </button>
               </div>
             ) : (
@@ -245,7 +248,7 @@ export default function Welcome() {
                   />
                 </label>
                 <div>
-                  <label className="flex items-center justify-between px-4 py-2 border border-yellow-300 rounded cursor-pointer hover:bg-yellow-300 transition w-fit">
+                  <label className="flex items-center justify-between px-4 py-2 border border-yellow-300 rounded cursor-pointer hover:bg-yellow-400 transition w-fit">
                     <span className="text-sm text-gray-700">
                       📁 Choose an image
                     </span>
@@ -297,8 +300,7 @@ export default function Welcome() {
                   }}
                   className="px-4 py-1 rounded bg-red-400 hover:bg-red-500 ms-2"
                 >
-                  {' '}
-                  ❌ Cancel{' '}
+                  ❌ Cancel
                 </button>
               </div>
             ) : (
@@ -396,8 +398,7 @@ export default function Welcome() {
                 }}
                 className="px-4 py-1 rounded bg-red-400 hover:bg-red-500 ms-2"
               >
-                {' '}
-                ❌ Cancel{' '}
+                ❌ Cancel
               </button>
             </div>
           ) : (

@@ -626,16 +626,24 @@ export default function Admin() {
       </section>
       {/* Add New Project Section */}
       <div className="mt-10">
-        <button
-          onClick={() => setShowAddForm((prev) => !prev)}
-          className={`px-4 py-2 rounded text-white ${
-            showAddForm
-              ? 'bg-red-600 hover:bg-red-700'
-              : 'bg-green-600 hover:bg-green-700'
-          }`}
-        >
-          {showAddForm ? 'Cancel' : 'Add New Project'}
-        </button>
+        <div className="flex justify-between">
+          <button
+            onClick={() => setShowAddForm((prev) => !prev)}
+            className={`px-4 py-2 rounded text-white ${
+              showAddForm
+                ? 'bg-red-600 hover:bg-red-700'
+                : 'bg-green-600 hover:bg-green-700'
+            }`}
+          >
+            {showAddForm ? 'Cancel' : 'Add New Project'}
+          </button>
+          <a
+            href="/"
+            className="text-center bg-yellow-400 hover:bg-yellow-500 text-slate-950 transition px-4 py-2 rounded w-full sm:w-fit"
+          >
+            🏠 Go to Home
+          </a>
+        </div>
 
         {showAddForm && (
           <form

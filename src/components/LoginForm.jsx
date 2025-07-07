@@ -50,7 +50,13 @@ export default function LoginForm() {
             className="w-full p-2 border border-slate-300 rounded"
           />
           {error && <p className="text-red-600 uppercase">{error}</p>}
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-4">
+            <a
+              href="/"
+              className="text-center bg-yellow-400 hover:bg-yellow-500 text-slate-950 transition px-4 py-2 rounded w-full sm:w-fit"
+            >
+              🏠 Go to Home
+            </a>
             <button
               type="submit"
               className="bg-zinc-950 hover:bg-yellow-400 text-zinc-50 hover:text-slate-950 transition px-4 py-2 rounded w-full sm:w-fit"

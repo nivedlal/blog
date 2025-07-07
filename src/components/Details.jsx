@@ -375,7 +375,7 @@ export default function Details({ id }) {
                 onClick={() =>
                   setSections((prev) => [...prev, { type, content: '' }])
                 }
-                className="bg-yellow-300 hover:bg-yellow-400 px-3 py-1 rounded text-sm"
+                className="bg-yellow-400 hover:bg-yellow-500 px-3 py-1 rounded text-sm"
               >
                 ➕ {type}
               </button>
