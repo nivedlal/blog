@@ -78,9 +78,14 @@ export default function Details({ id }) {
           >
             ✖️
           </button>
-          <p className="text-sm sm:text-right" aria-live="polite">
-            {istTime}
-          </p>
+          {isLoggedIn && (
+            <a
+              className="ml-4 px-3 py-1 text-sm rounded transition bg-slate-200"
+              href="/admin"
+            >
+              🙍🏻‍♂️ Admin
+            </a>
+          )}
         </div>
 
         <div className="flex sm:justify-center mt-8">
@@ -214,21 +219,63 @@ export default function Details({ id }) {
               )}
             </div>
 
-            <div className="relative bg-slate-100 p-4 rounded-md my-4 lg:flex justify-center flex-col sm:flex-row gap-4">
+            <div
+              className={`relative bg-slate-100 p-4 rounded-md my-4 lg:flex ${isEditing ? 'justify-between' : 'justify-center'} flex-col sm:flex-row gap-4`}
+            >
               {/* Editable file URL */}
               {data.group === 'Files' &&
                 data.isfile &&
                 data.files &&
                 (isEditing ? (
-                  <input
-                    type="text"
-                    value={data.files}
-                    onChange={(e) =>
-                      setData((prev) => ({ ...prev, files: e.target.value }))
-                    }
-                    className="absolute top-2 right-2 w-[60%] sm:w-[30%] border px-2 py-1 rounded text-xs"
-                    placeholder="Edit file URL"
-                  />
+                  <div className="absolute top-2 right-2 flex items-center gap-2">
+                    {/* Show current file name if it exists */}
+                    {data.files && (
+                      <a
+                        href={data.files}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 text-xs truncate max-w-full"
+                      >
+                        📄 {data.files.split('/').pop()}
+                      </a>
+                    )}
+
+                    {/* Upload button */}
+                    <label className="bg-yellow-400 hover:bg-yellow-500 text-sm px-3 py-1 rounded shadow cursor-pointer text-center">
+                      Upload New File
+                      <input
+                        type="file"
+                        className="hidden"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+
+                          const formData = new FormData();
+                          formData.append('file', file);
+
+                          try {
+                            const res = await fetch('/api/upload', {
+                              method: 'POST',
+                              body: formData,
+                            });
+                            const result = await res.json();
+
+                            if (res.ok) {
+                              setData((prev) => ({
+                                ...prev,
+                                files: result.imageUrl,
+                              }));
+                            } else {
+                              alert(result.error || 'Upload failed');
+                            }
+                          } catch (err) {
+                            console.error('File upload error:', err);
+                            alert('Error uploading file');
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
                 ) : (
                   <a
                     href={data.files}
@@ -245,7 +292,7 @@ export default function Details({ id }) {
                 className="object-contain max-w-full h-auto rounded w-fit"
               />
               {isEditing && (
-                <div className="mt-6 space-y-2">
+                <div className="mt-6 space-y-2 flex flex-col items-center">
                   {data.image && (
                     <img
                       src={data.image}
@@ -254,38 +301,50 @@ export default function Details({ id }) {
                     />
                   )}
 
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={async (e) => {
-                      const file = e.target.files[0];
-                      if (!file) return;
+                  <div className="flex flex-col gap-1 w-fit">
+                    {data.image && (
+                      <span className="text-blue-600 text-xs truncate max-w-xs">
+                        📸 {data.image.split('/').pop()}
+                      </span>
+                    )}
 
-                      const formData = new FormData();
-                      formData.append('file', file);
+                    {/* Upload button */}
+                    <label className="cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium text-sm px-4 py-1.5 rounded shadow text-center">
+                      Upload Image
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
 
-                      try {
-                        const res = await fetch('/api/upload', {
-                          method: 'POST',
-                          body: formData,
-                        });
+                          const formData = new FormData();
+                          formData.append('file', file);
 
-                        const json = await res.json();
-                        if (json.imageUrl) {
-                          setData((prev) => ({
-                            ...prev,
-                            image: json.imageUrl,
-                          }));
-                        } else {
-                          alert(json.error || 'Upload failed');
-                        }
-                      } catch (err) {
-                        console.error('Upload error:', err);
-                        alert('Upload error');
-                      }
-                    }}
-                    className="w-fit border border-yellow-300 rounded p-2"
-                  />
+                          try {
+                            const res = await fetch('/api/upload', {
+                              method: 'POST',
+                              body: formData,
+                            });
+
+                            const json = await res.json();
+                            if (json.imageUrl) {
+                              setData((prev) => ({
+                                ...prev,
+                                image: json.imageUrl,
+                              }));
+                            } else {
+                              alert(json.error || 'Upload failed');
+                            }
+                          } catch (err) {
+                            console.error('Upload error:', err);
+                            alert('Upload error');
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
                 </div>
               )}
             </div>
@@ -374,37 +433,47 @@ export default function Details({ id }) {
                         />
                       )}
 
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
+                      <div className="flex flex-col gap-1 w-fit">
+                        {section.content && (
+                          <span className="text-blue-600 text-xs underline truncate max-w-xs">
+                            🖼️ {section.content.split('/').pop()}
+                          </span>
+                        )}
+                        <label className="cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium text-sm px-4 py-1.5 rounded shadow w-fit">
+                          Upload Image
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={async (e) => {
+                              const file = e.target.files[0];
+                              if (!file) return;
 
-                          const formData = new FormData();
-                          formData.append('file', file); // your `upload.js` supports this
+                              const formData = new FormData();
+                              formData.append('file', file);
 
-                          try {
-                            const res = await fetch('/api/upload', {
-                              method: 'POST',
-                              body: formData,
-                            });
-                            const json = await res.json();
+                              try {
+                                const res = await fetch('/api/upload', {
+                                  method: 'POST',
+                                  body: formData,
+                                });
+                                const json = await res.json();
 
-                            if (json.imageUrl) {
-                              const updated = [...sections];
-                              updated[index].content = json.imageUrl;
-                              setSections(updated);
-                            } else {
-                              alert(json.error || 'Upload failed');
-                            }
-                          } catch (err) {
-                            console.error('Upload error:', err);
-                            alert('Upload error');
-                          }
-                        }}
-                        className="w-fit border border-yellow-300 rounded p-2"
-                      />
+                                if (json.imageUrl) {
+                                  const updated = [...sections];
+                                  updated[index].content = json.imageUrl;
+                                  setSections(updated);
+                                } else {
+                                  alert(json.error || 'Upload failed');
+                                }
+                              } catch (err) {
+                                console.error('Upload error:', err);
+                                alert('Upload error');
+                              }
+                            }}
+                            className="hidden"
+                          />
+                        </label>
+                      </div>
                     </div>
                   </>
                 )}

@@ -348,18 +348,36 @@ export default function Admin() {
             <span className="sr-only">Loading...</span>
           </div>
         ) : (
-          <table className="min-w-full border border-gray-300">
+          <table className="min-w-full border border-slate-500 border border-slate-500-gray-300">
             <thead>
               <tr className="bg-gray-100">
-                <th className="border px-4 py-2 text-left">ID</th>
-                <th className="border px-4 py-2 text-left">Title</th>
-                <th className="border px-4 py-2 text-left">Date</th>
-                <th className="border px-4 py-2 text-left">Tags</th>
-                <th className="border px-4 py-2 text-left">Category</th>
-                <th className="border px-4 py-2 text-left">Description</th>
-                <th className="border px-4 py-2 text-left">Image</th>
-                <th className="border px-4 py-2 text-left">Group</th>
-                <th className="border px-4 py-2 text-center">Actions</th>
+                <th className="border border-slate-500 px-4 py-2 text-left">
+                  ID
+                </th>
+                <th className="border border-slate-500 px-4 py-2 text-left">
+                  Title
+                </th>
+                <th className="border border-slate-500 px-4 py-2 text-left">
+                  Date
+                </th>
+                <th className="border border-slate-500 px-4 py-2 text-left">
+                  Tags
+                </th>
+                <th className="border border-slate-500 px-4 py-2 text-left">
+                  Category
+                </th>
+                <th className="border border-slate-500 px-4 py-2 text-left">
+                  Description
+                </th>
+                <th className="border border-slate-500 px-4 py-2 text-left">
+                  Image
+                </th>
+                <th className="border border-slate-500 px-4 py-2 text-left">
+                  Group
+                </th>
+                <th className="border border-slate-500 px-4 py-2 text-center">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -367,7 +385,7 @@ export default function Admin() {
                 <tr>
                   <td
                     colSpan="8"
-                    className="border px-4 py-2 text-center text-gray-500"
+                    className="border border-slate-500 px-4 py-2 text-center text-gray-500"
                   >
                     No projects found.
                   </td>
@@ -376,62 +394,64 @@ export default function Admin() {
                 projects.map((p) =>
                   editingId === p.id ? (
                     <tr key={p.id} className="bg-yellow-100">
-                      <td className="border px-4 py-2">{p.id}</td>
-                      <td className="border px-4 py-2">
+                      <td className="border border-slate-500 px-4 py-2">
+                        {p.id}
+                      </td>
+                      <td className="border border-slate-500 px-4 py-2">
                         <input
                           type="text"
                           value={editForm.title}
                           onChange={(e) =>
                             handleChange('title', e.target.value)
                           }
-                          className="w-full border rounded px-1 py-0.5"
+                          className="w-full border border-slate-500 rounded px-1 py-0.5"
                         />
                       </td>
-                      <td className="border px-4 py-2">
+                      <td className="border border-slate-500 px-4 py-2">
                         <input
                           type="text"
                           value={editForm.date}
                           onChange={(e) => handleChange('date', e.target.value)}
-                          className="w-full border rounded px-1 py-0.5"
+                          className="w-full border border-slate-500 rounded px-1 py-0.5"
                         />
                       </td>
-                      <td className="border px-4 py-2">
+                      <td className="border border-slate-500 px-4 py-2">
                         <input
                           type="text"
                           value={editForm.tags}
                           onChange={(e) => handleChange('tags', e.target.value)}
-                          className="w-full border rounded px-1 py-0.5"
+                          className="w-full border border-slate-500 rounded px-1 py-0.5"
                           placeholder="Comma separated"
                         />
                       </td>
-                      <td className="border px-4 py-2">
+                      <td className="border border-slate-500 px-4 py-2">
                         <input
                           type="text"
                           value={editForm.category}
                           onChange={(e) =>
                             handleChange('category', e.target.value)
                           }
-                          className="w-full border rounded px-1 py-0.5"
+                          className="w-full border border-slate-500 rounded px-1 py-0.5"
                           placeholder="Comma separated"
                         />
                       </td>
-                      <td className="border px-4 py-2 max-w-md">
+                      <td className="border border-slate-500 px-4 py-2 max-w-md">
                         <textarea
                           value={editForm.description}
                           onChange={(e) =>
                             handleChange('description', e.target.value)
                           }
-                          className="w-full border rounded px-2 py-1 resize-y overflow-auto min-h-[80px] max-h-[300px]"
+                          className="w-full border border-slate-500 rounded px-2 py-1 resize-y overflow-auto min-h-[80px] max-h-[300px]"
                           placeholder="Enter description..."
                         />
                       </td>
-                      <td className="border px-4 py-2">
+                      <td className="border border-slate-500 px-4 py-2">
                         <div className="flex flex-col gap-2">
                           {editForm.image && (
                             <img
                               src={editForm.image}
                               alt="Preview"
-                              className="w-32 h-32 object-cover rounded border"
+                              className="w-32 h-32 object-cover rounded border border-slate-500"
                             />
                           )}
                           <label className="cursor-pointer inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded shadow-sm w-fit">
@@ -445,14 +465,14 @@ export default function Admin() {
                           </label>
                         </div>
                       </td>
-                      <td className="border px-4 py-2">
+                      <td className="border border-slate-500 px-4 py-2">
                         <select
                           id="group-select-edit"
                           value={editForm.group}
                           onChange={(e) =>
                             handleChange('group', e.target.value)
                           }
-                          className="p-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer w-40 max-w-full"
+                          className="p-2 border border-slate-500 border border-slate-500-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer w-40 max-w-full"
                         >
                           <option value="Process">Process</option>
                           <option value="Project">Project</option>
@@ -473,7 +493,7 @@ export default function Admin() {
                           )}
                         </div>
                       </td>
-                      <td className="border border-black px-4 py-2 space-x-4 text-neutral-400">
+                      <td className="border border-slate-500 border border-slate-500-black px-4 py-2 space-x-4 text-neutral-400">
                         <button
                           onClick={() => saveEdit(p.id)}
                           className="hover:text-yellow-400"
@@ -519,19 +539,27 @@ export default function Admin() {
                     </tr>
                   ) : (
                     <tr key={p.id} className="hover:bg-gray-50">
-                      <td className="border px-4 py-2">{p.id}</td>
-                      <td className="border px-4 py-2">{p.title}</td>
-                      <td className="border px-4 py-2">{p.date}</td>
-                      <td className="border px-4 py-2">
+                      <td className="border border-slate-500 px-4 py-2">
+                        {p.id}
+                      </td>
+                      <td className="border border-slate-500 px-4 py-2 text-blue-700 hover:underline">
+                        <a href={`/details/${p.id}`}>{p.title}</a>
+                      </td>
+                      <td className="border border-slate-500 px-4 py-2">
+                        {p.date}
+                      </td>
+                      <td className="border border-slate-500 px-4 py-2">
                         {Array.isArray(p.tags) ? p.tags.join(', ') : p.tags}
                       </td>
-                      <td className="border px-4 py-2">
+                      <td className="border border-slate-500 px-4 py-2">
                         {Array.isArray(p.category)
                           ? p.category.join(', ')
                           : p.category}
                       </td>
-                      <td className="border px-4 py-2">{p.description}</td>
-                      <td className="border px-4 py-2">
+                      <td className="border border-slate-500 px-4 py-2">
+                        {p.description}
+                      </td>
+                      <td className="border border-slate-500 px-4 py-2">
                         {p.image ? (
                           <img
                             src={p.image}
@@ -542,8 +570,10 @@ export default function Admin() {
                           'No image'
                         )}
                       </td>
-                      <td className="border px-4 py-2">{p.group}</td>
-                      <td className="border border-black px-4 py-2 space-x-4 text-neutral-400">
+                      <td className="border border-slate-500 px-4 py-2">
+                        {p.group}
+                      </td>
+                      <td className="border border-slate-500 border border-slate-500-black px-4 py-2 space-x-4 text-neutral-400">
                         <button
                           onClick={() => startEdit(p)}
                           className="hover:text-yellow-400"
@@ -610,7 +640,7 @@ export default function Admin() {
         {showAddForm && (
           <form
             onSubmit={handleAddProject}
-            className="mt-6 space-y-4 bg-gray-50 p-4 rounded border"
+            className="mt-6 space-y-4 bg-gray-50 p-4 rounded border border-slate-500"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
@@ -618,7 +648,7 @@ export default function Admin() {
                 placeholder="Title"
                 value={newProject.title}
                 onChange={(e) => handleNewChange('title', e.target.value)}
-                className="border p-2 rounded w-full"
+                className="border border-slate-500 p-2 rounded w-full"
                 required
               />
               <input
@@ -626,7 +656,7 @@ export default function Admin() {
                 placeholder="Date"
                 value={newProject.date}
                 onChange={(e) => handleNewChange('date', e.target.value)}
-                className="border p-2 rounded w-full"
+                className="border border-slate-500 p-2 rounded w-full"
                 required
               />
               <input
@@ -634,21 +664,21 @@ export default function Admin() {
                 placeholder="Tags (comma separated)"
                 value={newProject.tags}
                 onChange={(e) => handleNewChange('tags', e.target.value)}
-                className="border p-2 rounded w-full"
+                className="border border-slate-500 p-2 rounded w-full"
               />
               <input
                 type="text"
                 placeholder="Category (comma separated)"
                 value={newProject.category}
                 onChange={(e) => handleNewChange('category', e.target.value)}
-                className="border p-2 rounded w-full"
+                className="border border-slate-500 p-2 rounded w-full"
               />
               <div className="flex flex-col gap-2">
                 {newProject.image && (
                   <img
                     src={newProject.image}
                     alt="Preview"
-                    className="w-32 h-32 object-cover rounded border"
+                    className="w-32 h-32 object-cover rounded border border-slate-500"
                   />
                 )}
                 <label className="cursor-pointer inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded shadow-sm w-fit">
@@ -672,7 +702,7 @@ export default function Admin() {
                   id="group-select"
                   value={newProject.group}
                   onChange={(e) => handleNewChange('group', e.target.value)}
-                  className="p-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer w-40 max-w-full"
+                  className="p-2 border border-slate-500 border border-slate-500-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer w-40 max-w-full"
                 >
                   <option value="Process">Process</option>
                   <option value="Project">Project</option>
@@ -701,7 +731,7 @@ export default function Admin() {
                 placeholder="Description"
                 value={newProject.description}
                 onChange={(e) => handleNewChange('description', e.target.value)}
-                className="border p-2 rounded w-full col-span-1 sm:col-span-2"
+                className="border border-slate-500 p-2 rounded w-full col-span-1 sm:col-span-2"
               />
             </div>
             <button
