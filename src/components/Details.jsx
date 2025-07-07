@@ -8,6 +8,7 @@ export default function Details({ id }) {
   const [isEditing, setIsEditing] = useState(false);
   const [originalData, setOriginalData] = useState({});
   const [sections, setSections] = useState([]);
+  const [originalSections, setOriginalSections] = useState([]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -85,6 +86,28 @@ export default function Details({ id }) {
             >
               🙍🏻‍♂️ Admin
             </a>
+          )}
+          {isLoggedIn && (
+            <button
+              onClick={() => {
+                if (isEditing) {
+                  setData(originalData);
+                  setSections(originalSections);
+                  setIsEditing(false);
+                } else {
+                  setOriginalData(data);
+                  setOriginalSections(JSON.parse(JSON.stringify(sections)));
+                  setIsEditing(true);
+                }
+              }}
+              className={`ml-4 px-3 py-1 text-sm rounded transition whitespace-nowrap ${
+                isEditing
+                  ? 'bg-red-400 hover:bg-red-500'
+                  : 'bg-yellow-400 hover:bg-yellow-500'
+              }`}
+            >
+              {isEditing ? '❌ Cancel' : '✏️ Edit'}
+            </button>
           )}
         </div>
 
@@ -182,7 +205,7 @@ export default function Details({ id }) {
           </div>
         ) : (
           <>
-            <div className="flex justify-between items-center mt-4">
+            <div className="flex justify-center items-center mt-4">
               {isEditing ? (
                 <input
                   type="text"
@@ -190,32 +213,12 @@ export default function Details({ id }) {
                   onChange={(e) =>
                     setData((prev) => ({ ...prev, title: e.target.value }))
                   }
-                  className="text-3xl sm:text-6xl font-bold w-full"
+                  className="text-5xl sm:text-8xl font-bold w-full text-center"
                 />
               ) : (
                 <h1 className="text-5xl sm:text-8xl font-black uppercase sm:text-center">
                   {data.title}
                 </h1>
-              )}
-              {isLoggedIn && (
-                <button
-                  onClick={() => {
-                    if (isEditing) {
-                      setData(originalData);
-                      setIsEditing(false);
-                    } else {
-                      setOriginalData(data);
-                      setIsEditing(true);
-                    }
-                  }}
-                  className={`ml-4 px-3 py-1 text-sm rounded transition whitespace-nowrap ${
-                    isEditing
-                      ? 'bg-red-400 hover:bg-red-500'
-                      : 'bg-yellow-400 hover:bg-yellow-500'
-                  }`}
-                >
-                  {isEditing ? '❌ Cancel' : '✏️ Edit'}
-                </button>
               )}
             </div>
 
