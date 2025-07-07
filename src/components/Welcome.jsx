@@ -86,7 +86,7 @@ export default function Welcome() {
   }, [activeTab]);
 
   return (
-    <div className="bg-gray-200 text-gray-900 selection:bg-yellow-300 sm:text-xl font-bold min-h-screen flex flex-col p-2 sm:p-8">
+    <div className="bg-gray-200 text-gray-900 selection:bg-yellow-300 sm:text-xl min-h-screen flex flex-col p-2 sm:p-8">
       {/* Header */}
       <header className="w-full p-4 sm:p-8 bg-stone-50 border-b border-yellow-100 rounded-xl shadow">
         <div className="flex flex-row items-center justify-between gap-4 mb-8 sm:mb-16">
@@ -102,7 +102,7 @@ export default function Welcome() {
                 tabIndex={activeTab === tab.key ? 0 : -1}
                 aria-selected={activeTab === tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`group font-bold focus:outline-none flex items-center transition-colors ${
+                className={`group focus:outline-none flex items-center transition-colors ${
                   activeTab === tab.key
                     ? 'text-yellow-500'
                     : 'text-gray-700 hover:text-yellow-400'
@@ -177,7 +177,7 @@ export default function Welcome() {
                     className="w-full h-60 sm:h-80 object-cover rounded-md mb-4"
                   />
                 )}
-                <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                <h3 className="text-xl mb-2">{item.title}</h3>
                 <p className="text-gray-400 text-sm my-4 font-thin">
                   {item.date}
                 </p>
@@ -233,7 +233,7 @@ export default function Welcome() {
                 tabIndex={activeTab === tab.key ? 0 : -1}
                 aria-selected={activeTab === tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`font-bold focus:outline-none ${
+                className={`focus:outline-none ${
                   activeTab === tab.key
                     ? 'text-yellow-500'
                     : 'text-gray-700 hover:text-yellow-400'

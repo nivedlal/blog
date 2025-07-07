@@ -316,7 +316,7 @@ export default function Admin() {
   return (
     <div className="p-2 sm:p-8">
       <div className="flex items-center justify-between w-full mb-8">
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-3xl">
           Welcome, <span className="capitalize">{username}</span>
         </h1>
         <button
@@ -415,14 +415,14 @@ export default function Admin() {
                           placeholder="Comma separated"
                         />
                       </td>
-                      <td className="border px-4 py-2">
-                        <input
-                          type="text"
+                      <td className="border px-4 py-2 max-w-md">
+                        <textarea
                           value={editForm.description}
                           onChange={(e) =>
                             handleChange('description', e.target.value)
                           }
-                          className="w-full border rounded px-1 py-0.5"
+                          className="w-full border rounded px-2 py-1 resize-y overflow-auto min-h-[80px] max-h-[300px]"
+                          placeholder="Enter description..."
                         />
                       </td>
                       <td className="border px-4 py-2">
