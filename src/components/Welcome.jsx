@@ -137,10 +137,10 @@ export default function Welcome() {
   return (
     <div className="bg-gray-200 text-gray-900 selection:bg-yellow-300 sm:text-xl min-h-screen flex flex-col p-2 sm:p-8">
       <header className="w-full p-4 sm:p-8 bg-stone-50 border-b border-yellow-100 rounded-xl shadow">
-        <div className="sm:flex flex-row items-center justify-between gap-4 mb-8 sm:mb-16">
-          <div className="sm:flex gap-4 items-center">
+        <div className="lg:flex flex-row items-center justify-between gap-4 mb-8 sm:mb-16">
+          <div className="lg:flex gap-4 items-center">
             Hello 👋
-            <div className="mt-4 sm:mt-0 sm:flex justify-end">
+            <div className="mt-4 lg:mt-0 lg:flex justify-end">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -155,7 +155,7 @@ export default function Welcome() {
                   type="text"
                   name="search"
                   placeholder="🔍 Search projects..."
-                  className="p-2 rounded border border-yellow-400 w-full sm:w-64"
+                  className="p-2 rounded border border-yellow-400 w-full lg:w-64"
                 />
                 <button
                   type="submit"
@@ -167,7 +167,7 @@ export default function Welcome() {
             </div>
           </div>
           <div
-            className="flex gap-8 md:gap-4 lg:gap-8 cursor-pointer justify-center sm:justify-normal mt-4 sm:mt-0 border rounded border-yellow-400 p-2 sm:border-none sm:p-0"
+            className="flex gap-8 lg:gap-4 lg:gap-8 cursor-pointer justify-center lg:justify-between mt-4 lg:mt-0 border rounded border-yellow-400 p-2 lg:border-none lg:p-0"
             role="tablist"
           >
             {tabs.map((tab) => (
