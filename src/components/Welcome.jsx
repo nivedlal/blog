@@ -277,7 +277,7 @@ export default function Welcome() {
                 fill="currentFill"
               />
             </svg>
-            <span class="sr-only">Loading...</span>
+            <span className="sr-only">Loading...</span>
           </div>
         ) : activeTab === 'human' ? (
           <div className="p-6 w-full p-4 sm:p-8 bg-stone-50 border-t border-yellow-100 shadow rounded-xl">
@@ -358,7 +358,10 @@ export default function Welcome() {
                       className="w-1/2 lg:w-1/3 h-auto rounded border border-yellow-300 shadow"
                     />
                   )}
-                  <p>{humanText}</p>
+                  <div
+                    className="prose max-w-none"
+                    dangerouslySetInnerHTML={{ __html: humanText }}
+                  />
                 </div>
                 {isLoggedIn && (
                   <button
