@@ -350,7 +350,7 @@ export default function Welcome() {
               </div>
             ) : (
               <div>
-                <div className="whitespace-pre-wrap flex gap-4 lg:gap-8 items-start">
+                <div className="whitespace-pre-wrap flex flex-col items-center lg:flex-row gap-4 lg:gap-8 lg:items-start">
                   {humanImage && (
                     <img
                       src={`/uploads/${humanImage}`}
