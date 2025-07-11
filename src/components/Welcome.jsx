@@ -350,12 +350,12 @@ export default function Welcome() {
               </div>
             ) : (
               <div>
-                <div className="whitespace-pre-wrap flex flex-col items-center lg:flex-row gap-4 lg:gap-8 lg:items-start">
+                <div className="whitespace-pre-wrap flex flex-col items-center xl:flex-row gap-4 xl:gap-8 xl:items-center">
                   {humanImage && (
                     <img
                       src={`/uploads/${humanImage}`}
                       alt="Human visual"
-                      className="w-1/2 lg:w-1/3 h-auto rounded border border-yellow-300 shadow"
+                      className="w-full xl:w-1/2 h-auto rounded border border-yellow-300 shadow"
                     />
                   )}
                   <div
