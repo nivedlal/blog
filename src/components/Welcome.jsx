@@ -167,7 +167,7 @@ export default function Welcome() {
             </div>
           </div>
           <div
-            className="flex gap-8 lg:gap-4 lg:gap-8 cursor-pointer justify-center lg:justify-between mt-4 lg:mt-0 border rounded border-yellow-400 p-2 lg:border-none lg:p-0"
+            className="flex gap-6 lg:gap-4 lg:gap-8 cursor-pointer justify-center lg:justify-between mt-4 lg:mt-0 border rounded border-yellow-400 p-2 lg:border-none lg:p-0"
             role="tablist"
           >
             {tabs.map((tab) => (
@@ -198,7 +198,7 @@ export default function Welcome() {
           </div>
         </div>
         <div className="mt-4 flex flex-col sm:flex-row justify-between sm:items-end gap-2">
-          <div className="sm:w-3/4">
+          <div className="sm:w-3/4 text-justify sm:text-left">
             {loading ? (
               <div className="space-y-4 animate-pulse">
                 <div className="h-4 bg-gray-300 rounded w-5/6" />
@@ -359,7 +359,7 @@ export default function Welcome() {
                     />
                   )}
                   <div
-                    className="prose max-w-none"
+                    className="prose max-w-none text-justify"
                     dangerouslySetInnerHTML={{ __html: humanText }}
                   />
                 </div>
@@ -411,7 +411,7 @@ export default function Welcome() {
       </main>
 
       <footer className="w-full p-4 sm:p-8 bg-stone-50 border-t border-yellow-100 shadow rounded-xl">
-        <div className="mb-8 sm:mb-16">
+        <div className="mb-8 sm:mb-16 text-justify sm:text-left">
           {loading ? (
             <div className="space-y-4 animate-pulse">
               <div className="h-4 bg-gray-300 rounded w-1/2" />
@@ -471,10 +471,7 @@ export default function Welcome() {
           <p className="text-gray-400 mb-2 sm:mb-0 ">
             © {year} All rights reserved | <a href="admin">admin</a>
           </p>
-          <div
-            className="flex gap-2 md:gap-4 lg:gap-8 cursor-pointer"
-            role="tablist"
-          >
+          <div className="flex gap-8 cursor-pointer" role="tablist">
             {tabs.map((tab) => (
               <button
                 key={tab.key}

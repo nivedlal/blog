@@ -95,7 +95,7 @@ export default function Details({ id }) {
           )}
         </div>
 
-        <div className="flex sm:justify-center mt-8">
+        <div className="flex sm:justify-center mt-4 sm:mt-8">
           <div className="sm:flex gap-6 text-sm text-gray-600 w-full sm:justify-center flex-col sm:flex-row">
             {loading ? (
               <div className="flex gap-6 animate-pulse">
@@ -367,7 +367,9 @@ export default function Details({ id }) {
                 rows={6}
               />
             ) : (
-              <p className="font-thin sm:text-2xl">{data.description}</p>
+              <p className="font-thin sm:text-2xl text-justify sm:text-left">
+                {data.description}
+              </p>
             )}
           </>
         )}
