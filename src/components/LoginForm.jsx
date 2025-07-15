@@ -24,7 +24,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="bg-gray-200 text-gray-900 selection:bg-yellow-300 sm:text-lg min-h-screen flex justify-center items-end sm:items-center p-2 sm:p-8">
+    <div className="text-gray-900 selection:bg-yellow-300 sm:text-lg min-h-screen flex justify-center items-end sm:items-center p-2 sm:p-8">
       <div className="relative max-w-md w-full">
         <img
           src="/loginForm.png"

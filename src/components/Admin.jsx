@@ -314,7 +314,7 @@ export default function Admin() {
   };
 
   return (
-    <div className="p-2 sm:p-8">
+    <div className="p-2 sm:p-8 bg-slate-100 relative">
       <div className="flex items-center justify-between w-full mb-8">
         <h1 className="text-3xl">
           Welcome, <span className="capitalize">{username}</span>

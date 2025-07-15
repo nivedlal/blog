@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FuzzyText from '../components/FuzzyText.jsx';
+---
+
+<Layout>
+  <div
+    class="min-h-screen flex flex-col justify-center items-center text-center relative"
+  >
+    <span class="inline-block">
+      <FuzzyText text="404" baseIntensity={0.1} client:load />
+    </span>
+    <p class="uppercase mt-8">You just took a wrong turn in the multiverse.</p>
+    <a
+      href="/"
+      class="text-sm px-4 py-1.5 bg-yellow-300 rounded-md hover:bg-yellow-400 hover:border-yellow-500 transition mt-2 border border-yellow-400"
+    >
+      Back to Safety
+    </a>
+  </div>
+</Layout>

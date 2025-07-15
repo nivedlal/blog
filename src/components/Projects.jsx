@@ -62,7 +62,7 @@ export default function Projects({ tag, category }) {
   }, [projects, tag, category, query]);
 
   return (
-    <div className="bg-gray-200 text-gray-900 min-h-screen selection:bg-yellow-300 p-4 sm:p-8">
+    <div className="relative text-gray-900 min-h-screen selection:bg-yellow-300 p-4 sm:p-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl sm:text-3xl font-bold">Filtered Projects</h1>

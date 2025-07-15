@@ -54,7 +54,7 @@ export default function Details({ id }) {
   }, [id]);
 
   return (
-    <div className="bg-gray-200 text-gray-900 selection:bg-yellow-300 sm:text-xl min-h-screen flex flex-col p-2 sm:p-8">
+    <div className="relative w-full text-gray-900 selection:bg-yellow-300 sm:text-xl min-h-screen flex flex-col p-2 sm:p-8">
       <div className="w-full p-4 sm:p-8 bg-stone-50 border-t border-yellow-100 shadow rounded-xl">
         <div className="flex justify-between items-center">
           <button

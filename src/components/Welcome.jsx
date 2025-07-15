@@ -135,11 +135,21 @@ export default function Welcome() {
   };
 
   return (
-    <div className="bg-gray-200 text-gray-900 selection:bg-yellow-300 sm:text-xl min-h-screen flex flex-col p-2 sm:p-8">
+    <div className="w-full text-gray-900 selection:bg-yellow-300 sm:text-xl min-h-screen flex flex-col p-2 sm:p-8">
       <header className="w-full p-4 sm:p-8 bg-stone-50 border-b border-yellow-100 rounded-xl shadow">
         <div className="lg:flex flex-row items-center justify-between gap-4 mb-8 sm:mb-16">
           <div className="lg:flex gap-4 items-center">
-            Hello 👋
+            Hello{' '}
+            <span
+              className="inline-block origin-bottom animate-[wave_2s_ease-in-out_infinite]"
+              style={{
+                display: 'inline-block',
+                transformOrigin: '70% 70%',
+                animation: 'wave 2s ease-in-out infinite',
+              }}
+            >
+              👋
+            </span>
             <div className="mt-4 lg:mt-0 lg:flex justify-end">
               <form
                 onSubmit={(e) => {
